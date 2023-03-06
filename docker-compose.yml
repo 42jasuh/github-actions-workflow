@@ -1,0 +1,18 @@
+version: "3.5"
+
+services:
+  app:
+    container_name: app_test
+    image: app_test:prod
+    ports:
+      - 3001:3001
+
+  nginx:
+    container_name: nginx_test
+    image: nginx:1.23-alpine
+    volumes:
+      - ./docker/source/frontend/build:/home/jscode
+      - ./docker/source/nginx:/etc/nginx/conf.d
+    command: sh -c "nginx && tail -f /dev/null"
+    ports:
+      - 80:80
